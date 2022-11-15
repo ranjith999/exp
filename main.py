@@ -1,11 +1,10 @@
 from tkinter import *
-from tkinter import messagebox
 from tkinter import ttk
-
+from expm    import exp
 
 
 Tableheading=("Sno","Exp_name","exp_amt")
-TableData=[]
+
 
 
 root=Tk()
@@ -14,15 +13,11 @@ root.geometry("700x200")
 root.title('PYTHON 1 Assigment')
 root.resizable(0,1)
 
+ex=exp()
 def save():
     name=input_1.get()
-    
     amt=input_2.get()
-    if not amt.isnumeric():
-        messagebox.showinfo(title="ERROR",message="Pls Enter Numaric value")
-    else:
-        TableData.append([str(len(TableData)+1),str(name),str(amt)])
-        messagebox.showinfo(title="saved",message=str(name)+str(amt))
+    ex.AddExp(name,amt)
     renderview()
     dashboard()
 
@@ -34,30 +29,18 @@ def renderview():
     tree.heading('Exp Amt', text='Exp Amt')
     # Insert the data in Treeview widget
 
-    for x in TableData:
+    for x in ex.Exps():
         tree.insert('', 'end', text="1", values=x)
 
     tree.grid(row=3,column=1,columnspan =6)
 
 def dashboard(): 
-    temp_amt_list=[]
-    for x in TableData:
-        temp_amt_list.append(int(x[2]))
-    count=len(TableData)
-    sum_1=sum(temp_amt_list)
-    avg=sum_1/count
-    temp_amt_list.sort()
-    min_1=temp_amt_list[0]
-    max_1=temp_amt_list[-1]
     
-
-    mylabel_01['text']='Total Exp : '+str(count)
-    
-    
-    mylabel_02['text']='Sum Total Exp : '+str(sum_1)
-    mylabel_03['text']='Avg Exp : '+str(avg)
-    mylabel_04['text']='Max Exp : '+str(max_1)
-    mylabel_05['text']='Min Exp : '+str(min_1)
+    mylabel_01['text']='Total Exp : '+ex.TotalExp()
+    mylabel_02['text']='Sum Total Exp : '+ex.SumOfExp()
+    mylabel_03['text']='Avg Exp : '+ex.AvgOfExp()
+    mylabel_04['text']='Max Exp : '+ex.MaxOfExp()
+    mylabel_05['text']='Min Exp : '+ex.MinOfExp()
     
         
 
